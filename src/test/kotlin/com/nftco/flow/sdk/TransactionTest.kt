@@ -115,6 +115,18 @@ class TransactionTest {
         assertThat(account.keys).isNotEmpty
     }
 
+    @Test
+    fun `Can connect to previewnet`() {
+
+        val accessApi = TestUtils.newPreviewAccessApi()
+        accessApi.ping()
+
+        val account = accessApi.getAccountAtLatestBlock(FlowAddress("56537ea8cb4a54ca"))
+        assertThat(account).isNotNull
+        println(account!!)
+        assertThat(account.keys).isNotEmpty
+    }
+
     // ignored for now because for whatever reason it can't find this transaction
     @Test
     fun `Can parse events`() {
