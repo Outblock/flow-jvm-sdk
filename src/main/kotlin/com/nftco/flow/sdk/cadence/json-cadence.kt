@@ -101,6 +101,13 @@ const val TYPE_STRUCT_INTERFACE = "StructInterface"
 const val TYPE_RESOURCE_INTERFACE = "ResourceInterface"
 const val TYPE_CONTRACT_INTERFACE = "ContractInterface"
 
+val json by lazy {
+    Json {
+        ignoreUnknownKeys = true
+        isLenient = true
+    }
+}
+
 @JsonTypeInfo(
     use = JsonTypeInfo.Id.NAME,
     include = JsonTypeInfo.As.EXISTING_PROPERTY,
@@ -151,13 +158,6 @@ abstract class Field<T> constructor(
     val type: String,
     val value: T?
 ) : Serializable {
-
-    val json by lazy {
-        Json {
-            ignoreUnknownKeys = true
-            isLenient = true
-        }
-    }
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
@@ -232,7 +232,6 @@ abstract class Field<T> constructor(
             }
         }
     }
-
     @kotlin.jvm.Throws
     inline fun <reified T> decode(): T {
         val jsonElement = decodeToAny().toJsonElement()
