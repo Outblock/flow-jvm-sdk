@@ -151,6 +151,14 @@ abstract class Field<T> constructor(
     val type: String,
     val value: T?
 ) : Serializable {
+
+    val json by lazy {
+        Json {
+            ignoreUnknownKeys = true
+            isLenient = true
+        }
+    }
+
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (other !is Field<*>) return false
@@ -228,7 +236,7 @@ abstract class Field<T> constructor(
     @kotlin.jvm.Throws
     inline fun <reified T> decode(): T {
         val jsonElement = decodeToAny().toJsonElement()
-        return Json.decodeFromJsonElement(jsonElement)
+        return json.decodeFromJsonElement(jsonElement)
     }
 }
 
